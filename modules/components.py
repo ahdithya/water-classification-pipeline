@@ -23,25 +23,11 @@ from tfx.dsl.input_resolution.strategies.latest_blessed_model_strategy import (
 )
 
 
-def init_components(
-    data_dir,
-    transform_module,
-    tuning_module,
-    training_module,
-    training_steps,
-    eval_steps,
-    serving_model_dir,
-):
+def init_components(args):
     """Initiate tfx pipeline components
 
     Args:
-        data_dir (str): a path to the data
-        transform_module (str): a path to the transform_module
-        tuner_module (str): a path to the transform_module
-        training_module (str): a path to the transform_module
-        training_steps (int): number of training steps
-        eval_steps (int): number of eval steps
-        serving_model_dir (str): a path to the serving model directory
+        args (dict): arguments that containts some dependencies for the pipeline
 
     Returns:
         TFX components
@@ -56,7 +42,7 @@ def init_components(
     )
 
     # Components
-    example_gen = CsvExampleGen(input_base=data_dir, output_config=output)
+    example_gen = CsvExampleGen(input_base=args["data_dir"], output_config=output)
     statistic_gen = StatisticsGen(examples=example_gen.outputs["examples"])
     schema_gen = SchemaGen(statistics=statistic_gen.outputs["statistics"])
     example_validator = ExampleValidator(
@@ -67,24 +53,26 @@ def init_components(
     transform = Transform(
         examples=example_gen.outputs["examples"],
         schema=schema_gen.outputs["schema"],
-        module_file=os.path.abspath(transform_module),
+        module_file=os.path.abspath(args["transform_module"]),
     )
 
     tuner = Tuner(
-        module_file=os.path.abspath(tuning_module),
+        module_file=os.path.abspath(args["tuning_module"]),
         examples=transform.outputs["transformed_examples"],
         transform_graph=transform.outputs["transform_graph"],
-        train_args=trainer_pb2.TrainArgs(splits=["train"], num_steps=training_steps),
-        eval_args=trainer_pb2.EvalArgs(splits=["eval"], num_steps=eval_steps),
+        train_args=trainer_pb2.TrainArgs(splits=["train"]),
+        eval_args=trainer_pb2.EvalArgs(splits=["eval"]),
     )
     trainer = Trainer(
-        module_file=os.path.abspath(training_module),
+        module_file=os.path.abspath(args["training_module"]),
         examples=transform.outputs["transformed_examples"],
         transform_graph=transform.outputs["transform_graph"],
         schema=schema_gen.outputs["schema"],
         hyperparameters=tuner.outputs["best_hyperparameters"],
-        train_args=trainer_pb2.TrainArgs(splits=["train"], num_steps=training_steps),
-        eval_args=trainer_pb2.EvalArgs(splits=["eval"], num_steps=eval_steps),
+        train_args=trainer_pb2.TrainArgs(
+            splits=["train"], num_steps=args["training_steps"]
+        ),
+        eval_args=trainer_pb2.EvalArgs(splits=["eval"], num_steps=args["eval_steps"]),
     )
 
     model_resolver = Resolver(
@@ -135,7 +123,7 @@ def init_components(
         model_blessing=evaluator.outputs["blessing"],
         push_destination=pusher_pb2.PushDestination(
             filesystem=pusher_pb2.PushDestination.Filesystem(
-                base_directory=serving_model_dir
+                base_directory=args["serving_model_dir"]
             )
         ),
     )
