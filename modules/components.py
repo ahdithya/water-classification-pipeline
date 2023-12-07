@@ -35,14 +35,16 @@ def init_components(args):
     output = example_gen_pb2.Output(
         split_config=example_gen_pb2.SplitConfig(
             splits=[
-                example_gen_pb2.SplitConfig.Split(name="train", hash_buckets=8),
+                example_gen_pb2.SplitConfig.Split(
+                    name="train", hash_buckets=8),
                 example_gen_pb2.SplitConfig.Split(name="eval", hash_buckets=2),
             ]
         )
     )
 
     # Components
-    example_gen = CsvExampleGen(input_base=args["data_dir"], output_config=output)
+    example_gen = CsvExampleGen(
+        input_base=args["data_dir"], output_config=output)
     statistic_gen = StatisticsGen(examples=example_gen.outputs["examples"])
     schema_gen = SchemaGen(statistics=statistic_gen.outputs["statistics"])
     example_validator = ExampleValidator(
@@ -60,19 +62,20 @@ def init_components(args):
         module_file=os.path.abspath(args["tuning_module"]),
         examples=transform.outputs["transformed_examples"],
         transform_graph=transform.outputs["transform_graph"],
-        train_args=trainer_pb2.TrainArgs(splits=["train"]),
-        eval_args=trainer_pb2.EvalArgs(splits=["eval"]),
+        train_args=trainer_pb2.TrainArgs(splits=["train"], num_steps=1000),
+        eval_args=trainer_pb2.EvalArgs(splits=["eval"], num_steps=100),
     )
+
     trainer = Trainer(
         module_file=os.path.abspath(args["training_module"]),
         examples=transform.outputs["transformed_examples"],
         transform_graph=transform.outputs["transform_graph"],
         schema=schema_gen.outputs["schema"],
-        hyperparameters=tuner.outputs["best_hyperparameters"],
         train_args=trainer_pb2.TrainArgs(
             splits=["train"], num_steps=args["training_steps"]
         ),
-        eval_args=trainer_pb2.EvalArgs(splits=["eval"], num_steps=args["eval_steps"]),
+        eval_args=trainer_pb2.EvalArgs(
+            splits=["eval"], num_steps=args["eval_steps"]),
     )
 
     model_resolver = Resolver(
