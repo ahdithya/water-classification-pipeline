@@ -4,7 +4,7 @@ Nama: Aditya Atallah
 
 username: ahdithya
 
-
+| | Deskripsi |
 |-|--|
 |Dataset| [Water Potability](https://www.kaggle.com/datasets/adityakadiwal/water-potability)  |
 | Masalah |Manusia membutuhkan air untuk mempertahankan hidrasi tubuh. Air membantu menjaga keseimbangan cairan  dalam tubuh, mengangkut nutrisi ke sel-sel serta membantu proses metabolisme tubuh, sehingga air sangat memiliki pangaruh besar pada tubuh manusia. Air juga dapat menjadi racun pada seseorang jika air yang dikonsumsi tidak memiliki kualitas yang baik. Air yang kurang baik dapat menyebabkan berbagai penyakit pada manusia seperti keracunan, diare, saluran pernafasan dan hal lainnya. Bahkan air yang kurang baik memiliki kandungan tertentu dapat menyebabkan gangguan saraf. Air yang kurang baik juga tidak hanya mempengaruhi tubuh manusia tapi juga alam seperti _Eutrofikasi_. Untuk itu, penting sekali menjaga kualitas air yang akan dikonsumsi atau digunakan, tidak hanya untuk tubuh manusia tapi juga ekosistem alam.|
