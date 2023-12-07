@@ -1,4 +1,4 @@
-Submission 1: Water Quality Classification
+# Water Quality Classification
 
 Nama: Aditya Atallah
 
