@@ -37,8 +37,8 @@ def preprocessing_fn(inputs):
     outputs = {}
 
     for feature in NUMERICAL_FEATURES:
-        scaled = tft.scale_to_0_1(inputs[feature])
-        outputs[transformed_name(feature)] = tf.cast(scaled, tf.float64)
+        tf_float = tf.cast(inputs[feature], dtype=tf.float64)
+        outputs[transformed_name(feature)] = tft.scale_to_0_1(tf_float)
 
     outputs[transformed_name(LABEL_KEY)] = tf.cast(inputs[LABEL_KEY], tf.int64)
 

@@ -40,7 +40,8 @@ def get_tuned_model(hp):
 
     # Add numerical features
     for feature in NUMERICAL_FEATURES:
-        input_features.append(layers.Input(shape=(1,), name=transformed_name(feature)))
+        input_features.append(layers.Input(
+            shape=(1,), name=transformed_name(feature)))
 
     concatenated_inputs = layers.Concatenate()(input_features)
     x = layers.Dense(

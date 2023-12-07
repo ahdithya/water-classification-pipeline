@@ -43,7 +43,8 @@ def get_model():
 
     # Add numerical features
     for feature in NUMERICAL_FEATURES:
-        input_features.append(layers.Input(shape=(1,), name=transformed_name(feature)))
+        input_features.append(layers.Input(
+            shape=(1,), name=transformed_name(feature)))
 
     concatenated_inputs = layers.Concatenate()(input_features)
     x = layers.Dense(256, activation="relu")(concatenated_inputs)
@@ -52,7 +53,8 @@ def get_model():
     outputs = layers.Dense(1, activation="sigmoid")(x)
     model = tf.keras.Model(inputs=input_features, outputs=outputs)
 
-    model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
+    model.compile(optimizer="adam", loss="binary_crossentropy",
+                  metrics=["accuracy"])
 
     return model
 
@@ -71,7 +73,8 @@ def get_serve_tf_examples_fn(model, tf_transform_output):
         """Return the output to be used in the serving signature."""
         feature_spec = tf_transform_output.raw_feature_spec()
         feature_spec.pop(LABEL_KEY)
-        parsed_features = tf.io.parse_example(serialized_tf_examples, feature_spec)
+        parsed_features = tf.io.parse_example(
+            serialized_tf_examples, feature_spec)
         transformed_features = model.tft_layer(parsed_features)
         outputs = model(transformed_features)
         return {"outputs": outputs}
@@ -117,7 +120,7 @@ def run_fn(fn_args):
         validation_data=eval_set,
         validation_steps=32,
         callbacks=[tensorboard_callback, es, mc],
-        epochs=10,
+        epochs=30,
     )
 
     signatures = {
@@ -127,5 +130,5 @@ def run_fn(fn_args):
         )
     }
 
-    model.save(fn_args.serving_model_dir, save_format="tf", signatures=signatures)
-    return
+    model.save(fn_args.serving_model_dir,
+               save_format="tf", signatures=signatures)
