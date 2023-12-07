@@ -1,10 +1,10 @@
-# Water Quality Classification
+# Final Submission: Water Quality Classification
 
 Nama: Aditya Atallah
 
 username: ahdithya
 
-| | Deskripsi |
+| |  Deskripsi |
 |-|--|
 |Dataset| [Water Potability](https://www.kaggle.com/datasets/adityakadiwal/water-potability)  |
 | Masalah |Manusia membutuhkan air untuk mempertahankan hidrasi tubuh. Air membantu menjaga keseimbangan cairan  dalam tubuh, mengangkut nutrisi ke sel-sel serta membantu proses metabolisme tubuh, sehingga air sangat memiliki pangaruh besar pada tubuh manusia. Air juga dapat menjadi racun pada seseorang jika air yang dikonsumsi tidak memiliki kualitas yang baik. Air yang kurang baik dapat menyebabkan berbagai penyakit pada manusia seperti keracunan, diare, saluran pernafasan dan hal lainnya. Bahkan air yang kurang baik memiliki kandungan tertentu dapat menyebabkan gangguan saraf. Air yang kurang baik juga tidak hanya mempengaruhi tubuh manusia tapi juga alam seperti _Eutrofikasi_. Untuk itu, penting sekali menjaga kualitas air yang akan dikonsumsi atau digunakan, tidak hanya untuk tubuh manusia tapi juga ekosistem alam.|
@@ -14,7 +14,7 @@ username: ahdithya
 | Metrics Evaluasi | Metrics Evaluasi yang digunakan pada klasifikasi kualitas air  yaitu _Accuracy_, _AUC_, _Binary Accuracy_, _Precision_ dan _recall_|
 | Evaluasi |  Hasil pengujian model yaitu pada metrik _accuracy_ bernilai 0.678, Metrik _AUC_ bernilai 0.68, Metrik _Binary Accuracy_ 0.678, _recall_ bernilai 0.364 dan _precision_ bernilai 0.632  |
 |Opsi Deployment|Proyek Klasifikasi Kualitas Air ini akan dideploy menggunakan platform `Railway`, yaitu platform yang menyediakan layanan gratis untuk mendeploy sebuah proyek dengan cara _Platform as a Service_ (PaaS).|
-|Web App|  [Water Potability](https://water-classification.up.railway.app/)|
+|Web App| [Water-Classification](https://water-classification.up.railway.app/)|
 |Monitoring| Pemantauan sistem ini menggunakan Prometheus dan Grafana. Proses pemantauan hanya mengevaluasi permintaan yang diterima oleh sistem. Pada pemantauan  yang dilakukan yaitu melihat perubahan jumlah request yang dilakukan kepada sistem dan menampilkan setiap status pada request yang dilakukan|
 
 
