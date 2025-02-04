@@ -1,8 +1,5 @@
-# Final Submission: Water Quality Classification
+# Water Quality Classification
 
-Nama: Aditya Atallah
-
-username: ahdithya
 
 | |  Deskripsi |
 |-|--|
